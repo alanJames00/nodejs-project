@@ -6,9 +6,14 @@ const url = require('url');
 // global variable to store active users
 let rooms = {};
 
-function sendActiveUsers(ws) {
-
-
+function sendActiveUsers(ws, roomName) {
+    const users = rooms[roomName].map(user => user.username);
+    if(ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+            type: 'active_users',
+            users
+        }));
+    }
 }
 
 
@@ -56,6 +61,26 @@ function startWebSocketServer() {
         rooms[roomName].push({ username, ws });
 
         console.log(rooms);
+        // send active users
+        sendActiveUsers(ws, roomName);
+
+
+
+
+
+
+
+
+
+
+
+        // handle disconnect
+        ws.on('close', () => {
+            console.log('disconnected');
+            rooms[roomName] = rooms[roomName].filter(user => user.ws !== ws);
+            console.log(rooms);
+            sendActiveUsers(ws, roomName);
+        });
     }
     catch(err) {
         ws.send(JSON.stringify({
