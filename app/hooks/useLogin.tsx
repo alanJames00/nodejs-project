@@ -27,6 +27,10 @@ const useLogin = () => {
 			}
 
 			localStorage.setItem("chat-user-token", data.token);
+			localStorage.setItem("chat-user", username);
+
+			// redirect to the home page
+			window.location.href = "/home";
 			setAuthUser(data);
 		} catch (error:any) {
 			toast.error(error.message);
