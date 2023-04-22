@@ -7,11 +7,13 @@ const url = require('url');
 let rooms = {};
 
 function sendActiveUsers(ws, roomName) {
-    const users = rooms[roomName].map(user => user.username);
+    const users = rooms[roomName].map(user => user.username)
+    // remove duplicates from the array
+    const uniqueUsers = [...new Set(users)];
     if(ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({
             type: 'active_users',
-            users
+            users: uniqueUsers
         }));
     }
 }
