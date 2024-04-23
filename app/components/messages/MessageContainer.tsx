@@ -10,7 +10,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 
 
 
-const MessageContainer = ({ ws }: any) => {
+const MessageContainer = ({ ws, myUsername, messageArray }: any) => {
 
 	const [messageText, setMessageText] = useState('');
 
@@ -34,6 +34,8 @@ const MessageContainer = ({ ws }: any) => {
 		setMessageText('');
 	};
 
+	console.log("messageArray", messageArray);
+
 	return (
 		<section className="msger">
 			<header className="msger-header">
@@ -48,7 +50,35 @@ const MessageContainer = ({ ws }: any) => {
 			</header>
 
 			<main className="msger-chat">
-				<div className="msg left-msg">
+				
+				
+				{ messageArray.map((message: any, idx: any) => (
+					<div key={idx} className={`msg ${message.sender === myUsername ? 'right-msg' : 'left-msg'}`}>
+						<div
+							className="msg-img"
+							style={{
+								backgroundImage:
+									`url(https://robohash.org/${message.sender}?set=set4&bgset=&size=400x400)`,
+							}}
+						></div>
+
+						<div className="msg-bubble">
+							<div className="msg-info">
+								<div className="msg-info-name">{message.sender}</div>
+								<div className="msg-info-time">{message.time}</div>
+							</div>
+
+							<div className="msg-text">
+								{message.message}
+							</div>
+						</div>
+					</div>
+				))}
+				
+				
+				
+				
+				{/* <div className="msg left-msg">
 					<div
 						className="msg-img"
 						style={{
@@ -88,7 +118,7 @@ const MessageContainer = ({ ws }: any) => {
 							Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, sunt.
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</main>
 
 			<form className="msger-inputarea">

@@ -7,8 +7,9 @@ import { useState, useEffect, use } from 'react';
 const Home = () => {
 
 	const [ws, setWs] = useState<any>(null);
-	
+	const [myUsername, setMyUsername] = useState<any>(null);
 	const [activeUsers, setActiveUsers] = useState<any>([]);
+	const [messages, setMessages] = useState<any>([]);
 
 	// check if the user has the token
 	
@@ -19,6 +20,9 @@ const Home = () => {
 		}
 		console.log("token", token);
 
+		// get the username from local storage
+		const username = localStorage.getItem("chat-user");
+		setMyUsername(username);
 		// connect to the websocket server
 		const socket = new WebSocket(`ws://localhost:8080?token=${token}`);
 		socket.onopen = () => {
@@ -38,6 +42,10 @@ const Home = () => {
 				console.log("recieved active users", parsedMessage.users);
 				setActiveUsers(parsedMessage.users);
 			}
+
+			else if(parsedMessage.type === "message"){
+				setMessages((prevMessages: any) => [...prevMessages, parsedMessage]);
+			}
 		};
 		
 
@@ -49,11 +57,15 @@ const Home = () => {
 
 	console.log("active users", activeUsers);
 
+	console.log("username fetched from local storage", myUsername);
+
+	console.log("messages", messages);
+
 	return (
 		
 		<div className='flex h-full w-screen justify-center items-cen msger-chat'>
 			<Sidebar activeUsers={activeUsers} />
-			<MessageContainer ws={ws}/>
+			<MessageContainer ws={ws} myUsername={myUsername} messageArray={messages}/>
 
 
 		</div>
