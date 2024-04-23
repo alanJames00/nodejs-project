@@ -1,7 +1,9 @@
 const WebSocket = require('ws');
 const jwt = require('jsonwebtoken');
 const url = require('url');
-
+const redis = require('../routes/redis');
+const uuid = require('uuid');
+const s3 = require('../utils/s3');
 
 // global variable to store active users
 let rooms = {};
@@ -72,7 +74,7 @@ function startWebSocketServer() {
 
 
         // handle incoming messages
-        ws.on('message', message => {
+        ws.on('message', async (message) => {
             
             const parsedMessage = JSON.parse(message);
             console.log("parsedMessage", parsedMessage);
@@ -95,6 +97,36 @@ function startWebSocketServer() {
                         }));
                     }
                 });
+            }
+
+            else if(parsedMessage.type == 'file_upload_request') {
+                
+                console.log('entered file upload request');
+                // generatea fileid using uuid
+                const fileId = uuid.v4();
+                // add it to redis
+                await redis.set(`file:${fileId}`, JSON.stringify({
+                    filename: parsedMessage.filename,
+                    size: parsedMessage.size,
+                    sender: username,
+                }));
+                
+                // generate the presigned url
+                try {
+                    const presignedUrl = await s3.generatePresignedUrl(fileId);
+                    console.log('presignedUrl', presignedUrl);
+                    ws.send(JSON.stringify({
+                        type: 'file_upload_response',
+                        presignedUrl,
+                        fileId
+                    }));
+                }
+                catch(err) {
+                    console.log('error generating presigned url', err);
+                    ws.send(JSON.stringify({
+                        type: 'file_upload_err'
+                    }));
+                }
             }
             
         });
