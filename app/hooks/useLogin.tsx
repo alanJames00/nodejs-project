@@ -6,18 +6,19 @@ const useLogin = () => {
 	const [loading, setLoading] = useState(false);
 	const { setAuthUser } = useAuthContext();
 
-	const login = async (username:any, password:any) => {
-		const success = handleInputErrors(username, password);
+	const login = async (username:any, roomName:any) => {
+		const success = handleInputErrors(username, roomName);
 		if (!success) return;
 		setLoading(true);
 		try {
-			const res = await fetch("/api/auth/login", {
+			const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/createChat`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ username, password }),
+				body: JSON.stringify({ username, roomName }),
 			});
 
 			const data = await res.json();
+			console.log(data);
 			if (data.error) {
 				throw new Error(data.error);
 			}

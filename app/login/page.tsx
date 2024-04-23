@@ -7,13 +7,15 @@ import useLogin from "../hooks/useLogin";
 
 const Login = () => {
 	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
+	const [roomName, setRoomName] = useState("");
 
 	const { loading, login } = useLogin();
 
+
+	
 	const handleSubmit = async (e:any) => {
 		e.preventDefault();
-		await login(username, password);
+		await login(username, roomName);
 	};
 
 	return (
@@ -44,11 +46,11 @@ const Login = () => {
 							<span className='text-base label-text'>Room Id</span>
 						</label>
 						<input
-							type='password'
+							type='text'
 							placeholder='Enter Password'
 							className='w-full input input-bordered h-10'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							value={roomName}
+							onChange={(e) => setRoomName(e.target.value)}
 						/>
 					</div>
 					
