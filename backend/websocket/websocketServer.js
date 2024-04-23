@@ -10,12 +10,16 @@ function sendActiveUsers(ws, roomName) {
     const users = rooms[roomName].map(user => user.username)
     // remove duplicates from the array
     const uniqueUsers = [...new Set(users)];
-    if(ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({
-            type: 'active_users',
-            users: uniqueUsers
-        }));
-    }
+
+    // send to everyone in the room
+    rooms[roomName].forEach(user => {
+        if(user.ws.readyState === WebSocket.OPEN) {
+            user.ws.send(JSON.stringify({
+                type: 'active_users',
+                users: uniqueUsers
+            }));
+        }
+    });
 }
 
 
