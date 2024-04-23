@@ -3,6 +3,14 @@ const jwt = require('jsonwebtoken');
 const url = require('url');
 
 
+// global variable to store active users
+let rooms = {};
+
+function sendActiveUsers(ws) {
+
+
+}
+
 
 // setup the websocket server
 function startWebSocketServer() {
@@ -34,8 +42,20 @@ function startWebSocketServer() {
             type: 'authenticated',
             message: 'user_authenticated'
         }));
+       
         
 
+        // continue with the connection
+        const username = tokenRes.username;
+        const roomName = tokenRes.roomName;
+
+        // add to the rooms
+        if (rooms[roomName] == null) {
+            rooms[roomName] = [];
+        }
+        rooms[roomName].push({ username, ws });
+
+        console.log(rooms);
     }
     catch(err) {
         ws.send(JSON.stringify({
