@@ -3,7 +3,7 @@ const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
 // Configure the S3 client with your access credentials and the S3 region
 const s3Client = new S3Client({ 
-    endpoint: 'https://chatapp.blr1.digitaloceanspaces.com',
+    endpoint: 'https://blr1.digitaloceanspaces.com',
     region: 'us-east-1',
     forcePathStyle: false,
     credentials: {
