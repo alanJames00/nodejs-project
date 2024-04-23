@@ -52,7 +52,7 @@ const Home = () => {
 	return (
 		
 		<div className='flex h-full w-screen justify-center items-cen msger-chat'>
-			<Sidebar />
+			<Sidebar activeUsers={activeUsers} />
 			<MessageContainer />
 		</div>
 		

@@ -4,12 +4,12 @@ import SearchInput from "./SearchInput";
 
 
 
-const Sidebar = () => {
+const Sidebar = ({ activeUsers }) => {
 	return (
 		<div className='border-r border-slate-500 p-4 flex flex-col'>
 			<SearchInput />
 			<div className='divider px-3'></div>
-			<Users/>
+			<Users activeUsers={activeUsers}/>
 			<LogoutButton />
 		</div>
 	);

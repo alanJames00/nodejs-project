@@ -37,7 +37,7 @@ import useConversation from "../../Zustand/useConversation";
 // };
 // export default Conversation;
 
-const User = () => {
+const User = ({ username } : any) => {
 	return (
 		<>
 			<div className='flex gap-4 items-center bg-[#ececec] rounded-full p-2 py-1 cursor-pointer'>
@@ -52,7 +52,7 @@ const User = () => {
 
 				<div className='flex flex-col flex-1'>
 					<div className='flex gap-3 justify-between'>
-						<p className='font-bold text-gray-600'>user id</p>
+						<p className='font-bold text-gray-600'>{ username }</p>
 						<span className='text-xl'>🎃</span>
 					</div>
 				</div>

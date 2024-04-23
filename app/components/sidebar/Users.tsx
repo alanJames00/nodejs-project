@@ -1,4 +1,5 @@
 "use client"
+import { AnyCnameRecord } from "dns";
 import useGetUsers from "../../hooks/useGetUsers";
 import { getRandomEmoji } from "../../utils/emoji";
 import User from "./User";
@@ -15,7 +16,7 @@ import User from "./User";
 // 					lastIdx={idx === conversations.length - 1}
 // 				/>
 // 			))}
-			
+
 
 // 			{loading ? <span className='loading loading-spinner mx-auto'></span> : null}
 // 		</div>
@@ -24,17 +25,12 @@ import User from "./User";
 // export default Conversations;
 
 
-const Users = () => {
+const Users = ({ activeUsers }: any) => {
 	return (
 		<div className='py-2 flex flex-col overflow-auto'>
-			<User/>
-			<User/>
-			<User/>
-			<User/>
-			<User/>
-			<User/>
-
-
+			{activeUsers.map((user: any) => (
+				<User key={user} username={user} />
+			))}
 		</div>
 	);
 };
