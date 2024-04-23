@@ -53,7 +53,9 @@ const Home = () => {
 		
 		<div className='flex h-full w-screen justify-center items-cen msger-chat'>
 			<Sidebar activeUsers={activeUsers} />
-			<MessageContainer />
+			<MessageContainer ws={ws}/>
+
+
 		</div>
 		
 	);
