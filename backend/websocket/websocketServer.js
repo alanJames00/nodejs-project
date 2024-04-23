@@ -80,13 +80,18 @@ function startWebSocketServer() {
             // check for the type of message
             if (parsedMessage.type === 'message') {
                 // send the message to everyone in the room
+
+                // get current time
+                const time = new Date().toLocaleTimeString();
+
                 console.log('received message', parsedMessage);
                 rooms[roomName].forEach(user => {
-                    if(user.ws.readyState === WebSocket.OPEN && user.username !== username) {
+                    if(user.ws.readyState === WebSocket.OPEN) {
                         user.ws.send(JSON.stringify({
                             type: 'message',
                             sender: username,
-                            message: parsedMessage.message
+                            message: parsedMessage.message,
+                            time
                         }));
                     }
                 });
