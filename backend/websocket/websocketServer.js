@@ -15,6 +15,36 @@ function startWebSocketServer() {
     const token = url.parse(req.url, true).query.token;
     console.log(token);
 
+    // check if token is valid
+    if (token == null) {
+        ws.send(JSON.stringify({
+            type: 'error',
+            message: 'invalid_token'
+        }));
+      ws.close();
+      return;
+    }
+
+    // verify the token
+    try {
+        const tokenRes = jwt.verify(token, process.env.JWT_SECRET);
+        
+        // tell the user that he is authenticated
+        ws.send(JSON.stringify({
+            type: 'authenticated',
+            message: 'user_authenticated'
+        }));
+        
+
+    }
+    catch(err) {
+        ws.send(JSON.stringify({
+            type: 'error',
+            message: 'invalid_token'
+        }));
+        ws.close();
+        return;
+    }
   });
 }
 
