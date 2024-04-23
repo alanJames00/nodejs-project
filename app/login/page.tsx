@@ -16,6 +16,7 @@ const Login = () => {
 	const handleSubmit = async (e:any) => {
 		e.preventDefault();
 		await login(username, roomName);
+
 	};
 
 	return (
@@ -43,11 +44,11 @@ const Login = () => {
 
 					<div>
 						<label className='label'>
-							<span className='text-base label-text'>Room Id</span>
+							<span className='text-base label-text'>Room Name</span>
 						</label>
 						<input
 							type='text'
-							placeholder='Enter Password'
+							placeholder='Enter RoomName'
 							className='w-full input input-bordered h-10'
 							value={roomName}
 							onChange={(e) => setRoomName(e.target.value)}

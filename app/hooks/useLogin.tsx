@@ -1,6 +1,8 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import { redirect } from 'next/navigation'
+
 
 const useLogin = () => {
 	const [loading, setLoading] = useState(false);
@@ -20,10 +22,11 @@ const useLogin = () => {
 			const data = await res.json();
 			console.log(data);
 			if (data.error) {
+				alert(data.err);
 				throw new Error(data.error);
 			}
 
-			localStorage.setItem("chat-user", JSON.stringify(data));
+			localStorage.setItem("chat-user-token", data.token);
 			setAuthUser(data);
 		} catch (error:any) {
 			toast.error(error.message);
