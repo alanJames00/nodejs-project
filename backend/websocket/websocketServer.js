@@ -118,7 +118,8 @@ function startWebSocketServer() {
                     ws.send(JSON.stringify({
                         type: 'file_upload_response',
                         presignedUrl,
-                        fileId
+                        fileId,
+                        uploadStatus: 'pending'
                     }));
                 }
                 catch(err) {
@@ -127,6 +128,19 @@ function startWebSocketServer() {
                         type: 'file_upload_err'
                     }));
                 }
+            }
+
+            // handle file upload success
+            else if(parsedMessage.type == 'file_upload_success') {
+                // send the file id to everyone in the room
+                // get the file details from redis
+                const prevData = await redis.get(`file:${parsedMessage.fileId}`);
+                const fileData = JSON.parse(prevData);
+                fileData.uploadStatus = 'success';
+                await redis.set(`file:${parsedMessage.fileId}`, JSON.stringify(fileData));
+                console.log('fileData', fileData);
+                console.log(parsedMessage.fileId)
+                
             }
             
         });
