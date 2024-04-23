@@ -17,7 +17,7 @@ const Home = () => {
 		console.log("token", token);
 
 		// connect to the websocket server
-		const socket = new WebSocket("ws://localhost:8080");
+		const socket = new WebSocket(`ws://localhost:8080?token=${token}`);
 		socket.onopen = () => {
 			console.log("connected to the server");
 		};
