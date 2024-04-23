@@ -19,6 +19,43 @@ const ChatFileUploader = ({ ws }) => {
                     size,
                 })
             );
+
+            ws.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                if (message.type === 'file_upload_response') {
+                    const { presignedUrl, fileId } = message;
+                    console.log('Received presigned URL:', presignedUrl);
+                    console.log('Received file ID:', fileId);
+
+                    // Upload the file to the presigned URL
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('PUT', presignedUrl, true);
+                    xhr.setRequestHeader('Content-Type', file.type);
+                    xhr.send(file);
+
+                    xhr.onload = () => {
+                        if (xhr.status === 200) {
+                            console.log('File uploaded successfully');
+                            
+                            // Send the file ID to the server
+                            ws.send(
+                                JSON.stringify({
+                                    type: 'file_upload_success',
+                                    fileId,
+                                })
+                            );
+                        } else {
+                            console.error('Error uploading file');
+                            alert('Error uploading file');
+                        }
+                    };
+                }
+
+                else if (message.type === 'file_upload_err') {
+                    console.error('Error uploading file');
+                    alert('Error uploading file');
+                }
+            };
         }
     };
 

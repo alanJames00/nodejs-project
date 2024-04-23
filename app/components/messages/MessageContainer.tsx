@@ -6,8 +6,7 @@ import useConversation from "../../Zustand/useConversation";
 import { useAuthContext } from "../../context/AuthContext";
 import { MdOutlineFileUpload } from "react-icons/md";
 
-
-
+import ChatFileUploader from "../../home/fileUploader";
 
 
 const MessageContainer = ({ ws, myUsername, messageArray }: any) => {
@@ -131,7 +130,7 @@ const MessageContainer = ({ ws, myUsername, messageArray }: any) => {
 				/>
 				<button className="  flex items-center justify-center"><MdOutlineFileUpload className="h-10 w-10" /></button>
 
-
+				<ChatFileUploader ws={ws}/>				
 
 				<button type="submit"
 					onClick={handleSubmit}
