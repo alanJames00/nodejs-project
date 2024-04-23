@@ -71,7 +71,28 @@ function startWebSocketServer() {
         sendActiveUsers(ws, roomName);
 
 
+        // handle incoming messages
+        ws.on('message', message => {
+            
+            const parsedMessage = JSON.parse(message);
+            console.log("parsedMessage", parsedMessage);
 
+            // check for the type of message
+            if (parsedMessage.type === 'message') {
+                // send the message to everyone in the room
+                console.log('received message', parsedMessage);
+                rooms[roomName].forEach(user => {
+                    if(user.ws.readyState === WebSocket.OPEN && user.username !== username) {
+                        user.ws.send(JSON.stringify({
+                            type: 'message',
+                            sender: username,
+                            message: parsedMessage.message
+                        }));
+                    }
+                });
+            }
+            
+        });
 
 
 
