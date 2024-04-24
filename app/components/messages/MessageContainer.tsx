@@ -88,7 +88,6 @@ const MessageContainer = ({ ws, myUsername, messageArray  }: any) => {
 					className="msger-input focus:outline-none relative"
 					placeholder="Enter your message..."
 				/>
-				<button className="  flex items-center justify-center"><MdOutlineFileUpload className="h-10 w-10" /></button>
 
 				<ChatFileUploader ws={ws} />
 

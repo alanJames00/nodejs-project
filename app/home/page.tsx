@@ -10,7 +10,6 @@ const Home = () => {
 	const [myUsername, setMyUsername] = useState<any>(null);
 	const [activeUsers, setActiveUsers] = useState<any>([]);
 	const [messages, setMessages] = useState<any>([]);
-	const [fileMessages, setFileMessages] = useState<any>([]);
 
 	// check if the user has the token
 	
@@ -60,7 +59,7 @@ const Home = () => {
 
 		// set the state
 		setWs(socket);
-	}, []);
+	}, [messages]);
 	
 	console.log("ws state", ws);
 
