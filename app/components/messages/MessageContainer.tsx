@@ -9,7 +9,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import ChatFileUploader from "../../home/fileUploader";
 
 
-const MessageContainer = ({ ws, myUsername, messageArray, fileMessages }: any) => {
+const MessageContainer = ({ ws, myUsername, messageArray  }: any) => {
 
 	const [messageText, setMessageText] = useState('');
 

@@ -25,7 +25,7 @@ const Home = () => {
 		const username = localStorage.getItem("chat-user");
 		setMyUsername(username);
 		// connect to the websocket server
-		const socket = new WebSocket(`ws://localhost:8080?token=${token}`);
+		const socket = new WebSocket(`wss://c-ws.linkzip.co?token=${token}`);
 		socket.onopen = () => {
 			console.log("connected to the server");
 		};
@@ -46,6 +46,8 @@ const Home = () => {
 
 			else if(parsedMessage.type === "message"){
 				setMessages((prevMessages: any) => [...prevMessages, parsedMessage]);
+				// remove duplicate messages from the messaegs array
+				
 			}
 
 			else if(parsedMessage.type === "file"){
@@ -72,9 +74,7 @@ const Home = () => {
 		
 		<div className='flex h-full w-screen justify-center items-cen msger-chat'>
 			<Sidebar activeUsers={activeUsers} />
-			<MessageContainer ws={ws} myUsername={myUsername} messageArray={messages} fileMessages={fileMessages}/>
-
-
+			<MessageContainer ws={ws} myUsername={myUsername} messageArray={messages} />
 		</div>
 		
 	);

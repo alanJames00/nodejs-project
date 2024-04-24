@@ -49,6 +49,9 @@ const ChatFileUploader = ({ ws }) => {
                             alert('Error uploading file');
                         }
                     };
+
+                    // remove the file from the state
+                    setSelectedFile(null);
                 }
 
                 else if (message.type === 'file_upload_err') {

@@ -43,12 +43,7 @@ import toast from "react-hot-toast";
 // export default SearchInput;
 const SearchInput = () => {
 	return (
-		<form className='flex items-center gap-2'>
-			<input type='text' placeholder='Search…' className='input input-bordered rounded-full bg-[#ececec]' />
-			<button type='submit' className='btn btn-circle bg-[#00C441] text-white hover:opacity-80'>
-				<IoSearchSharp className='w-6 h-6 outline-none' />
-			</button>
-		</form>
+		<h2 className='text-2xl font-bold text-slate-100'>Active Users</h2>
 	);
 };
 export default SearchInput;
