@@ -23,6 +23,17 @@ async function generatePresignedUrl(fileId) {
     return url;
 }
 
+
+async function generatePresignedDownloadUrl(fileId) {
+    const command = new GetObjectCommand({
+        Bucket: 'chatapp',
+        Key: fileId,
+    });
+    const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+    return url;
+}
+
 module.exports = {
-    generatePresignedUrl
+    generatePresignedUrl,
+    generatePresignedDownloadUrl
 };

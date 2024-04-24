@@ -141,6 +141,21 @@ function startWebSocketServer() {
                 console.log('fileData', fileData);
                 console.log(parsedMessage.fileId)
                 
+                // generate the download url
+                const downloadUrl = await s3.generatePresignedDownloadUrl(parsedMessage.fileId);
+                console.log('downloadUrl', downloadUrl);
+                rooms[roomName].forEach(user => {
+                    if(user.ws.readyState === WebSocket.OPEN) {
+                        user.ws.send(JSON.stringify({
+                            type: 'file',
+                            fileId: parsedMessage.fileId,
+                            downloadUrl,
+                            filename: fileData.filename,
+                            sender: fileData.sender,
+                            size: fileData.size
+                        }));
+                    }
+                });
             }
             
         });
