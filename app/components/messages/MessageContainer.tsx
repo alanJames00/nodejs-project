@@ -67,7 +67,7 @@ const MessageContainer = ({ ws, myUsername, messageArray, fileMessages }: any) =
 							{message.type === 'file' ? (
 								<div className="msg-text">
 									{/* Render file download link */}
-									<a href={message.url} target="_blank" rel="noopener noreferrer">{message.fileName}</a>
+									<a href={message.downloadUrl} target="_blank" rel="noopener noreferrer">{message.filename}</a>
 								</div>
 							) : (
 								<div className="msg-text">{message.message}</div>
@@ -77,47 +77,7 @@ const MessageContainer = ({ ws, myUsername, messageArray, fileMessages }: any) =
 				))}
 
 
-				{/* <div className="msg left-msg">
-					<div
-						className="msg-img"
-						style={{
-							backgroundImage:
-								"url(https://robohash.org/b4b0d284f9f15c440e14ec6677834450?set=set4&bgset=&size=400x400)",
-						}}
-					></div>
-
-					<div className="msg-bubble">
-						<div className="msg-info">
-							<div className="msg-info-name">user</div>
-							<div className="msg-info-time">12:45</div>
-						</div>
-
-						<div className="msg-text">
-							Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo, obcaecati.. 😄
-						</div>
-					</div>
-				</div>
-
-				<div className="msg right-msg">
-					<div
-						className="msg-img"
-						style={{
-							backgroundImage:
-								"url(https://image.flaticon.com/icons/svg/145/145867.svg)",
-						}}
-					></div>
-
-					<div className="msg-bubble">
-						<div className="msg-info">
-							<div className="msg-info-name">ME</div>
-							<div className="msg-info-time">12:46</div>
-						</div>
-
-						<div className="msg-text">
-							Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, sunt.
-						</div>
-					</div>
-				</div> */}
+				
 			</main>
 
 			<form className="msger-inputarea">
