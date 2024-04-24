@@ -10,6 +10,7 @@ const Home = () => {
 	const [myUsername, setMyUsername] = useState<any>(null);
 	const [activeUsers, setActiveUsers] = useState<any>([]);
 	const [messages, setMessages] = useState<any>([]);
+	const [fileMessages, setFileMessages] = useState<any>([]);
 
 	// check if the user has the token
 	
@@ -46,6 +47,12 @@ const Home = () => {
 			else if(parsedMessage.type === "message"){
 				setMessages((prevMessages: any) => [...prevMessages, parsedMessage]);
 			}
+
+			else if(parsedMessage.type === "file"){
+				// setFileMessages((prevFileMessages: any) => [...prevFileMessages, parsedMessage]);
+				setMessages((prevMessages: any) => [...prevMessages, parsedMessage]);
+			}
+			
 		};
 		
 
@@ -65,7 +72,7 @@ const Home = () => {
 		
 		<div className='flex h-full w-screen justify-center items-cen msger-chat'>
 			<Sidebar activeUsers={activeUsers} />
-			<MessageContainer ws={ws} myUsername={myUsername} messageArray={messages}/>
+			<MessageContainer ws={ws} myUsername={myUsername} messageArray={messages} fileMessages={fileMessages}/>
 
 
 		</div>

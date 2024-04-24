@@ -9,7 +9,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import ChatFileUploader from "../../home/fileUploader";
 
 
-const MessageContainer = ({ ws, myUsername, messageArray }: any) => {
+const MessageContainer = ({ ws, myUsername, messageArray, fileMessages }: any) => {
 
 	const [messageText, setMessageText] = useState('');
 
@@ -49,34 +49,34 @@ const MessageContainer = ({ ws, myUsername, messageArray }: any) => {
 			</header>
 
 			<main className="msger-chat">
-				
-				
-				{ messageArray.map((message: any, idx: any) => (
+
+
+				{messageArray.map((message: any, idx: any) => (
 					<div key={idx} className={`msg ${message.sender === myUsername ? 'right-msg' : 'left-msg'}`}>
 						<div
 							className="msg-img"
 							style={{
-								backgroundImage:
-									`url(https://robohash.org/${message.sender}?set=set4&bgset=&size=400x400)`,
+								backgroundImage: `url(https://robohash.org/${message.sender}?set=set4&bgset=&size=400x400)`,
 							}}
 						></div>
-
 						<div className="msg-bubble">
 							<div className="msg-info">
 								<div className="msg-info-name">{message.sender}</div>
 								<div className="msg-info-time">{message.time}</div>
 							</div>
-
-							<div className="msg-text">
-								{message.message}
-							</div>
+							{message.type === 'file' ? (
+								<div className="msg-text">
+									{/* Render file download link */}
+									<a href={message.url} target="_blank" rel="noopener noreferrer">{message.fileName}</a>
+								</div>
+							) : (
+								<div className="msg-text">{message.message}</div>
+							)}
 						</div>
 					</div>
 				))}
-				
-				
-				
-				
+
+
 				{/* <div className="msg left-msg">
 					<div
 						className="msg-img"
@@ -130,7 +130,7 @@ const MessageContainer = ({ ws, myUsername, messageArray }: any) => {
 				/>
 				<button className="  flex items-center justify-center"><MdOutlineFileUpload className="h-10 w-10" /></button>
 
-				<ChatFileUploader ws={ws}/>				
+				<ChatFileUploader ws={ws} />
 
 				<button type="submit"
 					onClick={handleSubmit}
