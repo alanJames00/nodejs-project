@@ -3,6 +3,8 @@ const cors = require("cors");
 require('dotenv').config();
 
 // local file exports
+const startWebSocketServer = require('./websocket/websocketServer');
+
 const chatRouter = require('./routes/chat.routes');
 
 // express setup
@@ -25,3 +27,5 @@ app.get('/t', (req, res) => {
 app.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);
 })
+
+startWebSocketServer();

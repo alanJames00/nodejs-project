@@ -152,7 +152,8 @@ function startWebSocketServer() {
                             downloadUrl,
                             filename: fileData.filename,
                             sender: fileData.sender,
-                            size: fileData.size
+                            size: fileData.size,
+                            time: new Date().toLocaleTimeString()
                         }));
                     }
                 });
