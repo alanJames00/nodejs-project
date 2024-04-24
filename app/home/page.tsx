@@ -59,7 +59,7 @@ const Home = () => {
 
 		// set the state
 		setWs(socket);
-	}, [messages]);
+	}, []);
 	
 	console.log("ws state", ws);
 
